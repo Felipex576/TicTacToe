@@ -1,0 +1,122 @@
+board = ["-", "-", "-",
+         "-", "-", "-",
+         "-", "-", "-"]
+player = "X"
+pos = [0, 1, 2, 3, 4, 5, 6, 7, 8]
+playing = True
+
+
+def play_game():
+    print("""****TICTACTOE****
+    PLAYER 1: X | PLAYER 2: O
+    """)
+    display_board()
+
+    while playing:
+        play_one()
+        rows()
+        columns()
+        diagonal()
+        draw()
+
+
+def display_board():
+    print(board[0] + " | " + board[1] + " | " + board[2] + "     1 | 2 | 3")
+    print(board[3] + " | " + board[4] + " | " + board[5] + "     4 | 5 | 6")
+    print(board[6] + " | " + board[7] + " | " + board[8] + "     7 | 8 | 9")
+
+
+def play_one():
+    global player
+    print("---- Player " + player + " turn. ----")
+    position = input("Enter a position to 1-9: ")
+    position = int(position) - 1
+    if position in pos and board[position] == "-":
+        board[position] = player
+        if player == "X":
+            player = "O"
+        elif player == "O":
+            player = "X"
+    else:
+        print("Wrong! Enter a valid position to 1-9:")
+    display_board()
+
+
+def rows():
+    global playing
+    if board[0] == board[1] == board[2] != "-":
+        print("**** Player " + board[0] + " wins. ****")
+        playing = False
+        menu()
+    elif board[3] == board[4] == board[5] != "-":
+        print("**** Player " + board[3] + " wins. ****")
+        playing = False
+        menu()
+    elif board[6] == board[7] == board[8] != "-":
+        print("**** Player " + board[6] + " wins. ****")
+        playing = False
+        menu()
+
+
+def columns():
+    global playing
+    if board[0] == board[3] == board[6] != "-":
+        print("**** Player " + board[0] + " wins. ****")
+        playing = False
+        menu()
+    elif board[1] == board[4] == board[7] != "-":
+        print("**** Player " + board[1] + " wins. ****")
+        playing = False
+        menu()
+    elif board[2] == board[5] == board[8] != "-":
+        print("**** Player " + board[2] + " wins. ****")
+        playing = False
+        menu()
+
+
+def diagonal():
+    global playing
+    if board[0] == board[4] == board[8] != "-":
+        print("**** Player " + board[0] + " wins. ****")
+        playing = False
+        menu()
+    elif board[2] == board[4] == board[6] != "-":
+        print("**** Player " + board[2] + " wins. ****")
+        playing = False
+        menu()
+
+
+def draw():
+    global  playing
+    if "-" not in board:
+        print("**** Draw. ****")
+        playing = False
+        menu()
+
+
+def menu():
+    action = input("""
+    ENTER:  
+    1. PLAY AGAIN
+    2. EXIT
+    """)
+    if action == "1":
+        play_again()
+    elif action == "2":
+        exit()
+    else:
+        print("Wrong! Enter a valid option.")
+        menu()
+
+
+def play_again():
+    global board, playing, player
+    board = ["-", "-", "-",
+             "-", "-", "-",
+             "-", "-", "-"]
+    play_game()
+    playing = True
+    player = "X"
+
+
+play_game()
